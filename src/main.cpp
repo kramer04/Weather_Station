@@ -27,7 +27,7 @@ BlynkTimer timer;
 
 #define SEALEVELPRESSURE_HPA (1013.25)
 Adafruit_BME280 bme;
-float temperature, humidity, pressure, altitude, altIGN = 481.38, pnmm; //change altIGN from your location
+float temperature, humidity, pressure, altitude, altIGN = 481.38, pnmm; //change altIGN from your altitude location
 int x = 180, y = 0, offst = 30;
 
 TFT_eSPI tft = TFT_eSPI();
