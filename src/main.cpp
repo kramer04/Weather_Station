@@ -16,10 +16,9 @@ void tft_capteurs();
 void ReadSensors();
 String get_encryption_type(wifi_auth_mode_t encryptionType);
 
-const char *auth = "QbuWGqrS9LD3XFkChXXbUyidgTqTDAm7";
+const char *auth = "your Blynk token";
 String ssid;
-//const char *id = "JASON-2.4G";
-const char *mdp = "CodedeCryptagedeSecurite";
+const char *mdp = "your password";
 const int led0 = 32;
 
 uint16_t moment;
@@ -28,7 +27,7 @@ BlynkTimer timer;
 
 #define SEALEVELPRESSURE_HPA (1013.25)
 Adafruit_BME280 bme;
-float temperature, humidity, pressure, altitude, altIGN = 481.38, pnmm;
+float temperature, humidity, pressure, altitude, altIGN = 481.38, pnmm; //change altIGN from your location
 int x = 180, y = 0, offst = 30;
 
 TFT_eSPI tft = TFT_eSPI();
@@ -121,7 +120,7 @@ void setup()
       Serial.println("]");
       tft.println("]");
       delay(10);
-      if (WiFi.SSID(i) == "JASON-2.4G" || WiFi.SSID(i) == "Freebox-905C49_2.4G")
+      if (WiFi.SSID(i) == "your ssid" || WiFi.SSID(i) == "your ssid") //may ssi. change it to your ssid home
       {
         ssid = WiFi.SSID(i);
         Serial.println((String) "Se connecte à " + ssid + "\n");
@@ -157,7 +156,7 @@ void setup()
     tft.println("Connexion WiFi vers");
     Serial.print(id);
     tft.print(id);
-    Serial.println(F(" Echec !"));
+    Serial.println(F(" Echec !")); //if failed
     tft.println(" Echec");
     WiFi.disconnect();
     while (1)
@@ -182,7 +181,7 @@ void setup()
   Blynk.config(auth);
   Blynk.disconnect();
   delay(1000);
-  Blynk.connect();
+  Blynk.connect(); //cpnnect to Blynk cloud
   tft.println("Se connecte \x85 Blynk");
   startTime = millis();
   while (millis() - startTime < 30000UL)
@@ -239,6 +238,7 @@ void loop()
   timer.run();
 }
 
+//time and date
 void temps()
 {
   tft.setCursor(10, 192);
@@ -264,6 +264,7 @@ void temps()
   Serial.println(contenu);
 }
 
+//to add a button on Blynk app to reset ESP32
 BLYNK_WRITE(V0) // Reset
 {
   if (param.asInt() == 1)
@@ -317,7 +318,7 @@ void ReadSensors()
   Blynk.virtualWrite(V1, pnmm);        // write pressure to V1 value display widget
   Blynk.virtualWrite(V2, temperature); // write temperature to V2 value display widget
   Blynk.virtualWrite(V3, humidity);
-  //Blynk.virtualWrite(V4, altitude);  // write altimeter to V3 value display widget
+  //Blynk.virtualWrite(V5, altitude);  // write altimeter to V5 value display widget. uncomment if you want it but always wrong
   Blynk.virtualWrite(V4, altIGN);
 
   tft_capteurs();
