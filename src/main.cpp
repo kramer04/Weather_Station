@@ -120,7 +120,7 @@ void setup()
       Serial.println("]");
       tft.println("]");
       delay(10);
-      if (WiFi.SSID(i) == "your ssid" || WiFi.SSID(i) == "your ssid") //may ssi. change it to your ssid home
+      if (WiFi.SSID(i) == "your ssid" || WiFi.SSID(i) == "your ssid") //change it to your ssid home
       {
         ssid = WiFi.SSID(i);
         Serial.println((String) "Se connecte à " + ssid + "\n");
