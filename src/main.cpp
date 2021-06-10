@@ -18,7 +18,7 @@ String get_encryption_type(wifi_auth_mode_t encryptionType);
 
 const char *auth = "your Blynk token";
 String ssid;
-const char *mdp = "your password";
+const char *mdp = "your password from your internet connexion";
 const int led0 = 32;
 
 uint16_t moment;
