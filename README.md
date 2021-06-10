@@ -4,6 +4,7 @@ Wheather station made with ESP32 Wroom + BME280 + TFT 2.4 parallel.
 It uses Blynk app from Playstore or Applestore.
 
 Link to pinouts ESP32 Wroom https://learn.upesy.com/fr/boards/ESP32_Wroom_DevKit.html
+
 You will need TFT_eSPI libraries from Bodmer and change User_Setup.h like this :
 
 #define TFT_PARALLEL_8_BIT
