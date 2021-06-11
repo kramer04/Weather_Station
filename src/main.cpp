@@ -17,8 +17,8 @@ void serial_monitor();
 void ReadSensors();
 String get_encryption_type(wifi_auth_mode_t encryptionType);
 
-const char *auth = "QbuWGqrS9LD3XFkChXXbUyidgTqTDAm7";
-const char *mdp = "CodedeCryptagedeSecurite";
+const char *auth = "your blynk token";
+const char *mdp = "your internet password";
 String ssid;
 const int led0 = 32;
 
@@ -120,7 +120,7 @@ void setup()
       Serial.println("]");
       tft.println("]");
       delay(10);
-      if (WiFi.SSID(i) == "JASON-2.4G" || WiFi.SSID(i) == "Freebox-905C49_2.4G") //change it to your ssid home
+      if (WiFi.SSID(i) == "your ssid" || WiFi.SSID(i) == "another ssid") //change it to your ssid home
       {
         ssid = WiFi.SSID(i);
         Serial.println((String) "Se connecte à " + ssid + "\n");
