@@ -13,12 +13,13 @@
 void (*resetFunc)(void) = 0;
 void temps();
 void tft_capteurs();
+void serial_monitor();
 void ReadSensors();
 String get_encryption_type(wifi_auth_mode_t encryptionType);
 
-const char *auth = "your Blynk token";
+const char *auth = "QbuWGqrS9LD3XFkChXXbUyidgTqTDAm7";
+const char *mdp = "CodedeCryptagedeSecurite";
 String ssid;
-const char *mdp = "your password from your internet connexion";
 const int led0 = 32;
 
 uint16_t moment;
@@ -27,7 +28,7 @@ BlynkTimer timer;
 
 #define SEALEVELPRESSURE_HPA (1013.25)
 Adafruit_BME280 bme;
-float temperature, humidity, pressure, altitude, altIGN = 481.38, pnmm; //change altIGN from your altitude location
+float temperature, humidity, pressure, altitude, altIGN = 481.38, pnmm, alpha, rosee; //change altIGN from your altitude location
 int x = 180, y = 0, offst = 30;
 
 TFT_eSPI tft = TFT_eSPI();
@@ -47,7 +48,7 @@ TFT_eSPI tft = TFT_eSPI();
 #define font 1
 
 time_t heure;
-const int decalage = 0; // la valeur dépend du fuseau horaire. Normalement 2 pour la France.
+const int decalage = 0; // la valeur dépend du fuseau horaire.
 const int daylight = 2; // décalage de l'heure d'été
 
 void setup()
@@ -82,7 +83,6 @@ void setup()
   //SCANNE LES RESEAUX WIFI
 
   Serial.println("uPesy WiFi Scan");
-  tft.println("WiFi scan");
   Serial.println("[*] Scanning WiFi network");
   tft.print("[*] Scanne WiFi:");
 
@@ -120,7 +120,7 @@ void setup()
       Serial.println("]");
       tft.println("]");
       delay(10);
-      if (WiFi.SSID(i) == "your ssid" || WiFi.SSID(i) == "your ssid") //change it to your ssid home
+      if (WiFi.SSID(i) == "JASON-2.4G" || WiFi.SSID(i) == "Freebox-905C49_2.4G") //change it to your ssid home
       {
         ssid = WiFi.SSID(i);
         Serial.println((String) "Se connecte à " + ssid + "\n");
@@ -218,7 +218,7 @@ void setup()
   tft.setCursor(0, 60, font);
   tft.print("Pression : ");
   tft.setCursor(0, 90, font);
-  tft.print("Altitude : ");
+  tft.print("Point de ros\x82\x65 : ");
   tft.setCursor(0, 120);
   tft.print("Alt. corrig\x82\x65 :");
   tft.setCursor(0, 150);
@@ -278,34 +278,40 @@ void tft_capteurs()
 {
   tft.setTextColor(VERT_PRINTEMPS, TFT_GREY);
   tft.setCursor(x, y, font);
-  //temperature = bme.readTemperature();
   tft.print(temperature);
   tft.print(" C");
   y = offst;
   tft.setCursor(x, y, font);
-  //humidity = bme.readHumidity();
   tft.print(humidity);
   tft.print(" %");
   y += offst;
   tft.setCursor(x, y, font);
-  //pressure = bme.readPressure() / 100.0F;
   tft.print(pressure);
   tft.print(" hpa");
   y += offst;
   tft.setCursor(x, y, font);
-  altitude = bme.readAltitude(SEALEVELPRESSURE_HPA);
-  tft.print(altitude);
-  tft.print(" m");
+  tft.print(rosee);
+  tft.print(" C");
   y += offst;
   tft.setCursor(x, y);
   tft.print(altIGN);
   tft.print(" m");
   y += offst;
   tft.setCursor(x, y);
-  //pnmm = pressure * exp(9.80665 / (287.05 * (temperature + 273.15 + 0.12 * humidity + 0.0065 * altIGN / 2)) * altIGN);
   tft.print(pnmm);
   tft.print(" hpa");
   y = 0;
+}
+
+void serial_monitor()
+{
+  Serial.println("------------------");
+  Serial.println((String) "Température : " + temperature);
+  Serial.println((String) "Humidité : " + humidity);
+  Serial.println((String) "Pression : " + pnmm);
+  Serial.println((String) "Point de rosée : " + rosee);
+  Serial.println((String) "Altitude corrigée : " + altIGN);
+  Serial.println("------------------");
 }
 
 void ReadSensors()
@@ -313,15 +319,19 @@ void ReadSensors()
   temperature = bme.readTemperature();
   pressure = bme.readPressure() / 100.0F;
   humidity = bme.readHumidity();
+  //calcul du point de rosée  (formule de Heinrich Gustav Magnus-Tetens)
+  alpha = log(humidity / 100.0F) + (17.27 * temperature) / (237.3 + temperature);
+  rosee = (237.3 * alpha) / (17.27 - alpha);
   pnmm = pressure * exp(9.80665 / (287.05 * (temperature + 273.15 + 0.12 * humidity + 0.0065 * altIGN / 2)) * altIGN);
 
   Blynk.virtualWrite(V1, pnmm);        // write pressure to V1 value display widget
   Blynk.virtualWrite(V2, temperature); // write temperature to V2 value display widget
   Blynk.virtualWrite(V3, humidity);
-  //Blynk.virtualWrite(V5, altitude);  // write altimeter to V5 value display widget. uncomment if you want it but always wrong
+  Blynk.virtualWrite(V5, rosee);
   Blynk.virtualWrite(V4, altIGN);
 
   tft_capteurs();
+  serial_monitor();
   temps();
 }
 
