@@ -17,6 +17,6 @@ You will need TFT_eSPI libraries from [Bodmer](https://github.com/Bodmer/TFT_eSP
 
 
 Using Blynk from phone
-![Using Blynk from phone](https://user-images.githubusercontent.com/29018157/121650255-ac08d880-ca99-11eb-825b-9ed34a38aa20.jpg)
 
+![Using Blynk from phone](https://user-images.githubusercontent.com/29018157/121650505-e7a3a280-ca99-11eb-8593-2dd90c1d4df6.jpg)
 
