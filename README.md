@@ -16,5 +16,7 @@ You will need TFT_eSPI libraries from [Bodmer](https://github.com/Bodmer/TFT_eSP
 [User_Setup.txt](https://github.com/kramer04/Weather_Station/files/6636456/User_Setup.txt)
 
 
-![Using Blynk from phone](https://user-images.githubusercontent.com/29018157/121649885-474d7e00-ca99-11eb-9d0a-90bcb0db63f4.jpg)
+Using Blynk from phone
+![Using Blynk from phone](https://user-images.githubusercontent.com/29018157/121650255-ac08d880-ca99-11eb-825b-9ed34a38aa20.jpg)
+
 
