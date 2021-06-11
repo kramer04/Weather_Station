@@ -1,3 +1,6 @@
+![blablateam](https://user-images.githubusercontent.com/29018157/121648752-1d478c00-ca98-11eb-948f-0f0667f0750b.png)
+
+
 # Weather_Station
 Wheather station made with ESP32 Wroom + BME280 + TFT 2.4 parallel.
 
